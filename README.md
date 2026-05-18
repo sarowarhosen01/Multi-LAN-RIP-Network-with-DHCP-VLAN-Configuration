@@ -59,7 +59,3 @@ This project implements a **multi-LAN enterprise-style network** using Cisco Pac
 | VLAN 99 (Native) | 192.168.99.0/24    | 255.255.255.0  | 192.168.99.1    | 192.168.99.10 - .50     | Management / Servers|
 | Router-Router Link | 10.0.0.0/30       | 255.255.255.252| 10.0.0.1 / .2   | N/A                     | RIP Backbone        |
 
-
-Switch(config)# interface range fa0/1 - 10
-Switch(config-if-range)# switchport mode access
-Switch(config-if-range)# switchport access vlan 10
