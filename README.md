@@ -2,7 +2,7 @@
 
 **A comprehensive Cisco Packet Tracer simulation demonstrating advanced networking concepts including VLAN segmentation, inter-VLAN routing, RIP dynamic routing, and centralized DHCP services.**
 
-![Network Topology](topology.png)  
+![Network Topology](https://raw.githubusercontent.com/sarowarhosen01/Multi-LAN-RIP-Network-with-DHCP-VLAN-Configuration/refs/heads/main/Screenshots/Multi-LAN%20RIP%20Network%20with%20DHCP%20%26%20VLAN%20Configuration.jpg)  
 *(Replace with screenshot/export of your .pkt topology or add image here)*
 
 ## Project Overview
