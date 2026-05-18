@@ -1,0 +1,39 @@
+enable
+configure terminal
+hostname R4
+
+
+# Configure Router-on-a-Stick for Finance VLAN
+interface  fa0/0
+no shutdown
+interface fa0/0.40
+encapsulation dot1Q 40
+ip address 192.168.4.1 255.255.255.0
+
+# Configure Point-to-Point links
+interface se0/0/0
+no shutdown
+ip address 10.1.14.2 255.255.255.252
+
+interface se0/0/1
+no shutdown
+ip address 10.1.45.1 255.255.255.252
+
+# DHCP Configuration for Finance Department
+ip dhcp pool Finance_POOL
+network 192.168.4.0 255.255.255.0
+default-router 192.168.4.1
+dns-server 8.8.8.8 
+ip dhcp excluded-address 192.168.4.1 192.168.4.10
+
+# RIP v2 Configuration
+router rip
+version 2
+no auto-summary
+network 192.168.4.0
+network 10.1.14.0
+network 10.1.45.0
+network 4.4.4.0
+
+end
+write memory

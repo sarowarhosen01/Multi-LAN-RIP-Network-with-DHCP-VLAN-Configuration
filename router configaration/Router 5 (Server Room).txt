@@ -1,0 +1,43 @@
+enable
+configure terminal
+hostname R5
+
+
+# Configure Server VLAN (No subinterface needed)
+interface fa0/0
+no shutdown
+ip address 192.168.5.1 255.255.255.0
+
+# Configure Point-to-Point links
+interface se0/2/1
+no shutdown
+ip address 10.1.25.2 255.255.255.252
+
+interface se0/0/0
+no shutdown
+ip address 10.1.45.2 255.255.255.252
+
+interface se0/0/1
+no shutdown
+ip address 10.1.56.1 255.255.255.252
+
+# DHCP Configuration for Server Room
+ip dhcp pool Server_POOL
+network 192.168.5.0 255.255.255.0
+default-router 192.168.5.1
+dns-server 8.8.8.8
+ip dhcp excluded-address 192.168.5.1 192.168.5.20
+
+# RIP v2 Configuration
+router rip
+version 2
+no auto-summary
+network 192.168.5.0
+network 10.1.25.0
+network 10.1.45.0
+network 10.1.56.0
+network 5.5.5.0
+
+
+end
+write memory

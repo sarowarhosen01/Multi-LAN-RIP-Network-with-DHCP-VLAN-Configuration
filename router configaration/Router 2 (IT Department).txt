@@ -1,0 +1,47 @@
+enable
+configure terminal
+hostname R2
+
+
+
+# Configure Router-on-a-Stick for IT VLAN
+interface fa0/0
+no shutdown
+interface fa0/0.20
+encapsulation dot1Q 20
+ip address 192.168.2.1 255.255.255.0
+
+# Configure Point-to-Point links
+interface se0/0/1
+no shutdown
+ip address 10.1.12.2 255.255.255.252
+
+interface se0/0/0
+no shutdown
+ip address 10.1.23.1 255.255.255.252
+
+interface se0/2/0
+no shutdown
+ip address 10.1.25.1 255.255.255.252
+
+# DHCP Configuration for IT Department
+ip dhcp pool IT_POOL
+network 192.168.2.0 255.255.255.0
+default-router 192.168.2.1
+dns-server 8.8.8.8 
+
+ip dhcp excluded-address 192.168.2.1 192.168.2.10
+
+# RIP v2 Configuration
+router rip
+version 2
+no auto-summary
+network 192.168.2.0
+network 10.1.12.0
+network 10.1.23.0
+network 10.1.25.0
+network 2.2.2.0
+
+
+end
+write memory

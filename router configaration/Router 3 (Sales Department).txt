@@ -1,0 +1,39 @@
+enable
+configure terminal
+hostname R3
+
+# Configure Router-on-a-Stick for Sales VLAN
+interface fa0/0
+no shutdown
+interface fa0/0.30
+encapsulation dot1Q 30
+ip address 192.168.3.1 255.255.255.0
+
+# Configure Point-to-Point links
+interface se0/0/1
+no shutdown
+ip address 10.1.23.2 255.255.255.252
+
+interface se0/0/0
+no shutdown
+ip address 10.1.36.1 255.255.255.252
+
+# DHCP Configuration for Sales Department
+ip dhcp pool Sales_POOL
+network 192.168.3.0 255.255.255.0
+default-router 192.168.3.1
+dns-server 8.8.8.8 
+ip dhcp excluded-address 192.168.3.1 192.168.3.10
+
+# RIP v2 Configuration
+router rip
+version 2
+no auto-summary
+network 192.168.3.0
+network 10.1.23.0
+network 10.1.36.0
+network 3.3.3.0
+
+
+end
+write memory

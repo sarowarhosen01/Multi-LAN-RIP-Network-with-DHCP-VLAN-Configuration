@@ -1,0 +1,41 @@
+enable
+configure terminal
+hostname R1
+
+# Configure Router-on-a-Stick for HR VLAN
+interface fa0/0
+no shutdown
+interface fa0/0.10
+encapsulation dot1Q 10
+ip address 192.168.1.1 255.255.255.0
+exit
+
+# Configure Point-to-Point links
+interface se0/0/0
+no shutdown
+ip address 10.1.12.1 255.255.255.252
+
+interface se0/0/1
+no shutdown
+ip address 10.1.14.1 255.255.255.252
+
+# DHCP Configuration for HR Department
+ip dhcp pool HR_POOL
+network 192.168.1.0 255.255.255.0
+default-router 192.168.1.1
+dns-server 8.8.8.8 8.8.4.4
+lease 7
+
+ip dhcp excluded-address 192.168.1.1 192.168.1.10
+
+# RIP v2 Configuration
+router rip
+version 2
+no auto-summary
+network 192.168.1.0
+network 10.1.12.0
+network 10.1.14.0
+network 1.1.1.0
+
+end
+write memory

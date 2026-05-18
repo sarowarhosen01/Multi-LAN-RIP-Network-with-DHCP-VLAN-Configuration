@@ -1,0 +1,40 @@
+enable
+configure terminal
+hostname R6
+
+
+
+# Configure Router-on-a-Stick for Branch VLAN
+interface fa0/0
+no shutdown
+interface fa0/0.60
+encapsulation dot1Q 60
+ip address 192.168.6.1 255.255.255.0
+
+# Configure Point-to-Point links
+interface se0/0/1
+no shutdown
+ip address 10.1.36.2 255.255.255.252
+
+interface se0/0/0
+no shutdown
+ip address 10.1.56.2 255.255.255.252
+
+# DHCP Configuration for Branch Office
+ip dhcp pool Branch_POOL
+network 192.168.6.0 255.255.255.0
+default-router 192.168.6.1
+dns-server 8.8.8.8 
+ip dhcp excluded-address 192.168.6.1 192.168.6.10
+
+# RIP v2 Configuration
+router rip
+version 2
+no auto-summary
+network 192.168.6.0
+network 10.1.36.0
+network 10.1.56.0
+network 6.6.6.0
+
+end
+write memory
